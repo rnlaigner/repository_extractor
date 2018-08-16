@@ -1,0 +1,5 @@
+login=username
+password=password
+language=java
+topic=java,spring
+max_threads=5
