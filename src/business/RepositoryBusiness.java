@@ -13,11 +13,12 @@ import org.kohsuke.github.PagedSearchIterable;
 
 import exception.GitHubQueryException;
 import model.RepositoryPair;
+import properties.QueryProperties;
 
 public class RepositoryBusiness 
 {
 	
-	public List<String> getRepositories() throws GitHubQueryException
+	public List<String> getRepositories(QueryProperties queryProperties) throws GitHubQueryException
 	{
 		
 		PagedSearchIterable<GHRepository> repositoryList = null;
@@ -60,18 +61,6 @@ public class RepositoryBusiness
 			repositoryURLsWithSize.add(pair);
 		}
 		
-		// Sorting
-		/*
-		Collections.sort(repositoryURLsWithSize, new Comparator<RepositoryPair>() {
-		        @Override
-		        public int compare(RepositoryPair first, RepositoryPair second)
-		        {
-
-		            return  first.getRight().compareTo(second.getRight());
-		        }
-		    });
-		*/
-		
 		repoURLS = repositoryURLsWithSize
 										.stream()
 										.sorted(Comparator.comparing(RepositoryPair::getRight))
@@ -80,6 +69,11 @@ public class RepositoryBusiness
 		
 		return repoURLS;
 		
+	}
+	
+	public PagedSearchIterable<GHRepository> retrieveRepositoriesForTest()
+	{
+		return null;
 	}
 	
 	public List<String> getSmallSetRepositories()
