@@ -1,12 +1,9 @@
 package repository_extractor;
 
-import static org.junit.Assert.*;
+import junit.framework.TestCase;
 
-import org.junit.Test;
+public class RepositoryRetrievalTest extends TestCase {
 
-public class RepositoryRetrievalTest {
-
-	@Test
 	public void test() 
 	{
 		fail("Not yet implemented");

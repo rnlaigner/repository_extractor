@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 import business.PropertiesBusiness;
 import business.RepositoryBusiness;
 import exception.ExecutionException;
+import exception.GitHubConnectionException;
 import exception.GitHubQueryException;
 import exception.ReadPropertiesException;
 import multithreading.RepositoryBuffer;
@@ -33,7 +34,7 @@ public class Application
 		queryProperties = propertiesBusiness.readQueryProperties();
 	}
 	
-	public void loadRepositories() throws GitHubQueryException
+	public void loadRepositories() throws GitHubQueryException, GitHubConnectionException
 	{
 		RepositoryBusiness repositoryBusiness = new RepositoryBusiness();
 		repositoryURLS = repositoryBusiness.getRepositories(queryProperties);
@@ -59,7 +60,7 @@ public class Application
 	    	try 
 	    	{
 	    		sharedLocation.set(repositoryURLS.get(i));
-	    	} 
+	    	}
 	    	catch (InterruptedException e) 
 	    	{
 	    		e.printStackTrace();
@@ -71,12 +72,11 @@ public class Application
 	    { 
 	    	application.execute( new RepositoryConsumer( sharedLocation, DIRECTORY_TO_SAVE ) );
 	    }
-
 	
 	    application.shutdown();
 	}
 
-	public void init(String[] args) throws ReadPropertiesException, ExecutionException, GitHubQueryException
+	public void init(String[] args) throws ReadPropertiesException, ExecutionException, GitHubQueryException, GitHubConnectionException
 	{
 		loadProperties();
 		loadRepositories();

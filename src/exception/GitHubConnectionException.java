@@ -2,14 +2,14 @@ package exception;
 
 import java.io.IOException;
 
-public class GitHubQueryException extends IOException {
+public class GitHubConnectionException extends IOException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public GitHubQueryException(String string) {
+	public GitHubConnectionException(String string) {
 		super(string);
 	}
 

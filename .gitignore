@@ -1,4 +1,7 @@
-target/
-target/*
-.settings/
-.settings/*
+.cache
+.classpath
+.factorypath
+.settings
+.manager
+.project
+target

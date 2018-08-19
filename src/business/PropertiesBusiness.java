@@ -25,7 +25,8 @@ public class PropertiesBusiness
 		Properties prop = loadProperties(input);
 		
 		// get the property value 
-		Integer maxThreads = Integer.getInteger( prop.getProperty("max_threads") );
+		String maxThreadsStr = prop.getProperty("max_threads");
+		Integer maxThreads = Integer.valueOf( maxThreadsStr );
 		String repositoryDir = prop.getProperty("repository_dir");
 		
 		ExecutionProperties executionProperties = new ExecutionProperties();
@@ -50,7 +51,7 @@ public class PropertiesBusiness
 		
 		QueryProperties queryProperties = new QueryProperties();
 		queryProperties.setQ(q);
-		queryProperties.setLanguage("language:"+language_property);
+		queryProperties.setLanguage(language_property);
 		
 		return queryProperties;
 	}
@@ -77,7 +78,8 @@ public class PropertiesBusiness
 		return q;
 	}
 
-	private Properties loadProperties(InputStream input) throws ReadPropertiesException {
+	private Properties loadProperties(InputStream input) throws ReadPropertiesException 
+	{
 		Properties prop = new Properties();
 		
 		try
@@ -90,24 +92,6 @@ public class PropertiesBusiness
 			ex.printStackTrace();
 			throw new ReadPropertiesException("Erro");
 		}
-		return prop;
-	}
-
-	private InputStream processInput() throws ReadPropertiesException 
-	{
-		InputStream input = null;
-		
-		String filepath = System.getProperty("user.home") + "\\" + propertyFilename;
-
-		try 
-		{
-			input = new FileInputStream(filepath);
-		} 
-		catch (IOException ex) 
-		{
-			ex.printStackTrace();
-			throw new ReadPropertiesException("Erro");
-		} 
 		finally 
 		{
 			if (input != null) 
@@ -121,6 +105,34 @@ public class PropertiesBusiness
 				}
 			}
 		}
+		
+		return prop;
+	}
+
+	private InputStream processInput() throws ReadPropertiesException 
+	{
+		InputStream input = null;
+		String pathConnector;
+		if(System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+			pathConnector = "\\";
+		}
+		else
+		{
+			pathConnector = "//";
+		}
+		
+		String filepath = System.getProperty("user.home") + pathConnector + propertyFilename;
+
+		try 
+		{
+			input = new FileInputStream(filepath);
+		} 
+		catch (IOException ex) 
+		{
+			ex.printStackTrace();
+			throw new ReadPropertiesException("Erro");
+		} 
+		
 		return input;
 	}
 	
